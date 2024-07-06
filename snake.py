@@ -1,7 +1,7 @@
 from turtle import Turtle
 
+# constant parameters with UPPER CASE name
 # snake body position, x-y axis, store in snake_body_position list
-
 SNAKE_BODY_POSITION = [(0, 0), (-20, 0), (-40, 0)]
 MOVE_DISTANCE = 20
 UP = 90
