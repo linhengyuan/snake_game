@@ -24,6 +24,7 @@ screen.onkey(snake.right, "Right")
 
 
 game_is_on = True
+
 while game_is_on:
     screen.update()
     time.sleep(0.1) # manipulate the speed of snake, shorter faster
@@ -33,5 +34,19 @@ while game_is_on:
     if snake.snake_body[0].distance(food) < 15:
         food.food_move_new_position()
         scoreboard.score_update_add()
+        snake.extend()
+
+    # Detect collision with wall
+    if snake.snake_body[0].xcor() > 290 or snake.snake_body[0].xcor() < (-290) \
+            or snake.snake_body[0].ycor() > 290 or snake.snake_body[0].ycor() < -290:
+        scoreboard.reset_game()
+        snake.reset()
+
+    # Detect collision with Tail
+    for seg in snake.snake_body[1:]:
+        if snake.snake_body[0].distance(seg) < 15:
+            scoreboard.reset_game()
+            snake.reset()
+
 
 screen.exitonclick()

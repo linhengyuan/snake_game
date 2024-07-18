@@ -9,7 +9,6 @@ DOWN = 270
 LEFT = 180
 RIGHT = 0
 
-
 class Snake:
 
     def __init__(self):
@@ -19,31 +18,44 @@ class Snake:
 
     def create_snake(self):
         for position in SNAKE_BODY_POSITION:
-            new_segment = Turtle("square")
-            new_segment.color("white")
-            new_segment.penup()
-            new_segment.goto(position)
-            self.snake_body.append(new_segment)
+            self.add_segment(position)
+    def add_segment(self, position):
+        new_segment = Turtle("square")
+        new_segment.color("white")
+        new_segment.penup()
+        new_segment.goto(position)
+        self.snake_body.append(new_segment)
+
+    def reset(self):
+        for seg in self.snake_body:
+            seg.goto(1000,1000)
+        self.snake_body.clear()
+        self.create_snake()
+        self.head = self.snake_body[0]
+
+
+    def extend(self):
+        self.add_segment(self.snake_body[-1].position()) # position() is a method from turtle module
 
     def move(self):
         for seg_num in range(len(self.snake_body) - 1, 0, -1):
             new_x = self.snake_body[seg_num - 1].xcor()
             new_y = self.snake_body[seg_num - 1].ycor()
             self.snake_body[seg_num].goto(new_x, new_y)
-        self.snake_body[0].forward(MOVE_DISTANCE)
+        self.head.forward(MOVE_DISTANCE)
 
     def up(self):
         if self.head.heading() != DOWN:
-            self.snake_body[0].setheading(UP)
+            self.head.setheading(UP)
 
     def down(self):
         if self.head.heading() != UP:
-            self.snake_body[0].setheading(DOWN)
+            self.head.setheading(DOWN)
 
     def left(self):
         if self.head.heading() != RIGHT:
-            self.snake_body[0].setheading(LEFT)
+            self.head.setheading(LEFT)
 
     def right(self):
         if self.head.heading() != LEFT:
-            self.snake_body[0].setheading(RIGHT)
+            self.head.setheading(RIGHT)
